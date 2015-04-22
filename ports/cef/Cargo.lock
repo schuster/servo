@@ -216,7 +216,10 @@ dependencies = [
 [[package]]
 name = "egl"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-egl#328e79b6256dea346f1821ccc4215e95fd1d58bc"
+source = "git+https://github.com/servo/rust-egl#c0159346b3adfdcf13f2cd86f5ee41750a72c078"
+dependencies = [
+ "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "encoding"
