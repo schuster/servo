@@ -305,7 +305,7 @@ dependencies = [
 [[package]]
 name = "fontconfig-sys"
 version = "2.11.1"
-source = "git+https://github.com/servo/libfontconfig#21b30d9a951acd54f6d2afc1bc60713f60140989"
+source = "git+https://github.com/servo/libfontconfig#ce4a38633dc649b95c9b4935c0cce53e76d8b46a"
 dependencies = [
  "expat-sys 2.1.0 (git+https://github.com/servo/libexpat)",
  "freetype-sys 2.4.11 (git+https://github.com/servo/libfreetype2)",
@@ -470,7 +470,7 @@ dependencies = [
 [[package]]
 name = "harfbuzz"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-harfbuzz#cc875777f820da0b85f39c2359d9609650b16600"
+source = "git+https://github.com/servo/rust-harfbuzz#33b6fd019fc04e46dd5fe15a5faf8efb1a9a0128"
 dependencies = [
  "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
