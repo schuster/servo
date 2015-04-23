@@ -33,7 +33,7 @@ fn lint_unrooted_ty(cx: &Context, ty: &ast::Ty, warning: &str) {
         ast::TyVec(ref t) | ast::TyFixedLengthVec(ref t, _) |
         ast::TyPtr(ast::MutTy { ty: ref t, ..}) | ast::TyRptr(_, ast::MutTy { ty: ref t, ..}) => lint_unrooted_ty(cx, &**t, warning),
         ast::TyPath(..) => {
-                match cx.tcx.def_map.borrow()[ty.id] {
+                match cx.tcx.def_map.borrow()[&ty.id] {
                     def::PathResolution{ base_def: def::DefTy(def_id, _), .. } => {
                         if ty::has_attr(cx.tcx, def_id, "must_root") {
                             cx.span_lint(UNROOTED_MUST_ROOT, ty.span, warning);

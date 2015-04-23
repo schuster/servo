@@ -53,9 +53,10 @@ pub fn expand_jstraceable(cx: &mut ExtCtxt, span: Span, mitem: &MetaItem, item: 
 // Mostly copied from syntax::ext::deriving::hash
 /// Defines how the implementation for `trace()` is to be generated
 fn jstraceable_substructure(cx: &mut ExtCtxt, trait_span: Span, substr: &Substructure) -> P<Expr> {
-    let state_expr = match substr.nonself_args {
-        [ref state_expr] => state_expr,
-        _ => cx.span_bug(trait_span, "incorrect number of arguments in `jstraceable`")
+    let state_expr = if substr.nonself_args.len() == 1 {
+        &substr.nonself_args[0]
+    } else {
+        cx.span_bug(trait_span, "incorrect number of arguments in `jstraceable`")
     };
     let trace_ident = substr.method_ident;
     let call_trace = |span, thing_expr| {
