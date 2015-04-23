@@ -4,7 +4,7 @@
 
 use geometry::Au;
 
-use cssparser::{self, RGBA, Color};
+use cssparser::RGBA;
 
 use libc::c_char;
 use std::ascii::AsciiExt;
@@ -244,7 +244,7 @@ pub fn parse_legacy_color(mut input: &str) -> Result<RGBA,()> {
     }
 
     // Step 9.
-    if input.char_at(0) == '#' {
+    if input.as_bytes()[0] == b'#' {
         input = &input[1..]
     }
 
