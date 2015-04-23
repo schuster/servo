@@ -83,7 +83,7 @@ dependencies = [
 [[package]]
 name = "clipboard"
 version = "0.0.1"
-source = "git+https://github.com/aweinstock314/rust-x11-clipboard#eae9596e7e407c8b6037b934c1a8e42a309423fd"
+source = "git+https://github.com/servo/rust-x11-clipboard#43afb218871e3148758c603f335576cb101cb1fa"
 dependencies = [
  "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "xlib 0.1.0 (git+https://github.com/servo/rust-xlib)",
@@ -112,7 +112,7 @@ name = "compositing"
 version = "0.0.1"
 dependencies = [
  "azure 0.1.0 (git+https://github.com/servo/rust-azure)",
- "clipboard 0.0.1 (git+https://github.com/aweinstock314/rust-x11-clipboard)",
+ "clipboard 0.0.1 (git+https://github.com/servo/rust-x11-clipboard)",
  "core_graphics 0.1.0 (git+https://github.com/servo/rust-core-graphics)",
  "core_text 0.1.0 (git+https://github.com/servo/rust-core-text)",
  "devtools_traits 0.0.1",
