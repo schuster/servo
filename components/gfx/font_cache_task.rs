@@ -139,7 +139,7 @@ impl FontCache {
                             let maybe_resource = load_whole_resource(&self.resource_task, url.clone());
                             match maybe_resource {
                                 Ok((_, bytes)) => {
-                                    let family = &mut self.web_families[family_name];
+                                    let family = &mut self.web_families.get_mut(&family_name).unwrap();
                                     family.add_template(&url.to_string(), Some(bytes));
                                 },
                                 Err(_) => {
@@ -148,7 +148,7 @@ impl FontCache {
                             }
                         }
                         Source::Local(ref local_family_name) => {
-                            let family = &mut self.web_families[family_name];
+                            let family = &mut self.web_families.get_mut(&family_name).unwrap();
                             get_variations_for_family(&local_family_name, |path| {
                                 family.add_template(&path, None);
                             });
