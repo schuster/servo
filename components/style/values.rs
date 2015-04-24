@@ -47,8 +47,8 @@ pub mod specified {
     use std::cmp;
     use std::f32::consts::PI;
     use std::fmt;
-    use std::fmt::{Formatter, Debug};
-    use std::num::{NumCast, ToPrimitive};
+    use std::fmt::Write;
+    use std::num::NumCast;
     use std::ops::{Add, Mul};
     use url::Url;
     use cssparser::{self, Token, Parser, ToCss, CssStringWriter};
@@ -158,7 +158,7 @@ pub mod specified {
         pub fn to_computed_value(&self, viewport_size: Size2D<Au>) -> Au {
             macro_rules! to_unit {
                 ($viewport_dimension:expr) => {
-                    $viewport_dimension.to_f64().unwrap() / 100.0
+                    $viewport_dimension.to_frac32_px() / 100.0
                 }
             }
 
@@ -207,7 +207,7 @@ pub mod specified {
     impl ToCss for Length {
         fn to_css<W>(&self, dest: &mut W) -> fmt::Result where W: fmt::Write {
             match self {
-                &Length::Absolute(length) => write!(dest, "{}px", length.to_subpx()),
+                &Length::Absolute(length) => write!(dest, "{}px", length.to_frac32_px()),
                 &Length::FontRelative(length) => length.to_css(dest),
                 &Length::ViewportPercentage(length) => length.to_css(dest),
                 &Length::ServoCharacterWidth(_)
@@ -502,7 +502,7 @@ pub mod specified {
 
         fn add(self, other: LengthAndPercentage) -> LengthAndPercentage {
             let mut new_lengths = self.lengths.clone();
-            new_lengths.push_all(other.lengths.as_slice());
+            new_lengths.push_all(&other.lengths);
             LengthAndPercentage {
                 lengths: new_lengths,
                 percentage: self.percentage + other.percentage,
@@ -846,7 +846,7 @@ pub mod specified {
 
     impl ToCss for Time {
         fn to_css<W>(&self, dest: &mut W) -> fmt::Result where W: fmt::Write {
-            dest.write_str(format!("{}ms", self.0).as_slice())
+            write!(dest, "{}ms", self.0)
         }
     }
 }
@@ -859,7 +859,6 @@ pub mod computed {
     use geom::size::Size2D;
     use properties::longhands;
     use std::fmt;
-    use std::marker::MarkerTrait;
     use std::ops::{Add, Mul};
     use url::Url;
     use util::geometry::Au;
@@ -895,7 +894,7 @@ pub mod computed {
         fn to_computed_value(&self, _context: &Context) -> Self::ComputedValue;
     }
 
-    pub trait ComputedValueAsSpecified: MarkerTrait {}
+    pub trait ComputedValueAsSpecified {}
 
     impl<T> ToComputedValue for T where T: ComputedValueAsSpecified + Clone {
         type ComputedValue = T;
@@ -1084,7 +1083,7 @@ pub mod computed {
 
         fn mul(self, scalar: CSSFloat) -> LengthAndPercentage {
             LengthAndPercentage {
-                length: Au::from_frac_px(self.length.to_subpx() * scalar),
+                length: Au::from_frac_px(self.length.to_frac32_px() * scalar),
                 percentage: self.percentage * scalar,
             }
         }

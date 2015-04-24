@@ -942,7 +942,6 @@ pub mod longhands {
     """)}
 
     <%self:longhand name="list-style-image">
-        use std::borrow::IntoCow;
         use url::Url;
         use cssparser::{ToCss, Token};
         use std::fmt;
@@ -959,7 +958,7 @@ pub mod longhands {
                 match *self {
                     SpecifiedValue::None => dest.write_str("none"),
                     SpecifiedValue::Url(ref url) => {
-                        Token::Url(url.to_string().into_cow()).to_css(dest)
+                        Token::Url(url.to_string().into()).to_css(dest)
                     }
                 }
             }
@@ -998,9 +997,9 @@ pub mod longhands {
     <%self:longhand name="quotes">
         use std::fmt;
         use values::computed::ComputedValueAsSpecified;
+        use std::borrow::Cow;
 
         use cssparser::{ToCss, Token};
-        use std::borrow::IntoCow;
 
         pub use self::computed_value::T as SpecifiedValue;
 
@@ -1019,9 +1018,9 @@ pub mod longhands {
                         try!(dest.write_str(" "));
                     }
                     first = false;
-                    try!(Token::QuotedString((*pair.0).into_cow()).to_css(dest));
+                    try!(Token::QuotedString(Cow::from(&*pair.0)).to_css(dest));
                     try!(dest.write_str(" "));
-                    try!(Token::QuotedString((*pair.1).into_cow()).to_css(dest));
+                    try!(Token::QuotedString(Cow::from(&*pair.1)).to_css(dest));
                 }
                 Ok(())
             }
@@ -1069,7 +1068,7 @@ pub mod longhands {
         use values::computed::ComputedValueAsSpecified;
 
         use cssparser::{ToCss, Token};
-        use std::borrow::{IntoCow, ToOwned};
+        use std::borrow::{Cow, ToOwned};
 
         pub use self::computed_value::T as SpecifiedValue;
 
@@ -1093,8 +1092,8 @@ pub mod longhands {
                         try!(dest.write_str(" "));
                     }
                     first = false;
-                    try!(Token::QuotedString(pair.0.as_slice().into_cow()).to_css(dest));
-                    try!(dest.write_str(format!(" {}", pair.1).as_slice()));
+                    try!(Token::QuotedString(Cow::from(&*pair.0)).to_css(dest));
+                    try!(write!(dest, " {}", pair.1));
                 }
                 Ok(())
             }
@@ -1520,7 +1519,7 @@ pub mod longhands {
         }
         pub fn parse_one_family(input: &mut Parser) -> Result<FontFamily, ()> {
             if let Ok(value) = input.try(|input| input.expect_string()) {
-                return Ok(FontFamily::FamilyName(Atom::from_slice(value.as_slice())))
+                return Ok(FontFamily::FamilyName(Atom::from_slice(&value)))
             }
             let first_ident = try!(input.expect_ident());
 //            match_ignore_ascii_case! { first_ident,
@@ -1536,7 +1535,7 @@ pub mod longhands {
                 value.push_str(" ");
                 value.push_str(&ident);
             }
-            Ok(FontFamily::FamilyName(Atom::from_slice(value.as_slice())))
+            Ok(FontFamily::FamilyName(Atom::from_slice(&value)))
         }
     </%self:longhand>
 
@@ -2897,7 +2896,6 @@ pub mod longhands {
             use values::CSSFloat;
             use values::computed;
 
-            use std::num::Float;
             use std::ops::Mul;
 
             #[derive(Clone, Copy, Debug, PartialEq)]

@@ -21,7 +21,6 @@ use values::computed::{LengthOrPercentageOrAuto, LengthOrPercentageOrNone, Lengt
 use values::CSSFloat;
 use cssparser::{RGBA, Color};
 
-use std::num::Float;
 use std::cmp::Ordering;
 use std::iter::repeat;
 use std::num::FromPrimitive;
