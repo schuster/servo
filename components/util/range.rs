@@ -4,6 +4,7 @@
 
 use std::cmp::{max, min};
 use std::fmt;
+use std::iter;
 use std::marker::PhantomData;
 use std::num::{self, Int};
 use std::ops;
