@@ -138,7 +138,7 @@ dependencies = [
 [[package]]
 name = "core_foundation"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-core-foundation#da54b5656490d553cb06031770ff542f0bffff1c"
+source = "git+https://github.com/servo/rust-core-foundation#928efbae42fc596e6ede2cf0949c3d6d6f3dad8f"
 dependencies = [
  "libc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -594,7 +594,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "layers"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-layers#6eaa0617597967c7f76d76fff47b8133aa53d0b6"
+source = "git+https://github.com/servo/rust-layers#f3fe0bc7b6a96024126df2be2d1ec7596606348d"
 dependencies = [
  "azure 0.1.0 (git+https://github.com/servo/rust-azure)",
  "cgl 0.0.1 (git+https://github.com/servo/rust-cgl)",
