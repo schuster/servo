@@ -6,10 +6,11 @@
 #![feature(box_syntax)]
 #![feature(collections)]
 #![feature(core)]
-#![cfg_attr(any(target_os="linux", target_os = "android"), feature(io))]
 #![feature(plugin)]
 #![feature(rustc_private)]
 #![feature(std_misc)]
+#![feature(step_trait)]
+#![feature(str_char)]
 #![feature(unicode)]
 #![feature(unsafe_destructor)]
 

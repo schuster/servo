@@ -18,7 +18,6 @@ use collections::BTreeMap;
 use core::cell::RefCell;
 use rustc_serialize::json::{self, Json, ToJson};
 use std::net::TcpStream;
-use std::num::Float;
 use std::sync::mpsc::{channel, Sender};
 
 #[derive(RustcEncodable)]

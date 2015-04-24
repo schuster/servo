@@ -39,7 +39,6 @@ use std::cmp;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry::{Occupied, Vacant};
 use std::mem as std_mem;
-use std::num::Float;
 use std::rc::Rc;
 use std::slice::bytes::copy_memory;
 use std::sync::mpsc::Sender;

@@ -33,7 +33,6 @@ use msg::constellation_msg::{KeyState, CONTROL, SHIFT, ALT};
 #[cfg(feature = "window")]
 use std::cell::{Cell, RefCell};
 #[cfg(feature = "window")]
-use std::num::Float;
 #[cfg(feature = "window")]
 use util::opts;
 

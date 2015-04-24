@@ -28,7 +28,6 @@ use freetype::tt_os2::TT_OS2;
 
 use libc::c_char;
 use std::mem;
-use std::num::Float;
 use std::ptr;
 use std::sync::Arc;
 

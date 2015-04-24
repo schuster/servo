@@ -42,7 +42,6 @@ use util::opts;
 use std::cmp;
 use std::default::Default;
 use std::iter::repeat;
-use std::num::Float;
 use style::values::specified::{AngleOrCorner, HorizontalDirection, VerticalDirection};
 use style::values::computed::{Image, LinearGradient, LengthOrPercentage, LengthOrPercentageOrAuto};
 use style::values::RGBA;

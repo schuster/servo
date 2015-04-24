@@ -20,7 +20,6 @@ use script_traits::CompositorEvent::{ClickEvent, MouseDownEvent, MouseMoveEvent,
 use script_traits::{ScriptControlChan, ConstellationControlMsg};
 use msg::compositor_msg::{Epoch, LayerId, ScrollPolicy};
 use msg::constellation_msg::PipelineId;
-use std::num::Float;
 use std::rc::Rc;
 
 pub struct CompositorData {

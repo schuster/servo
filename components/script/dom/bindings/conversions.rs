@@ -59,7 +59,6 @@ use libc;
 use std::borrow::ToOwned;
 use std::default;
 use std::marker::MarkerTrait;
-use std::num::Float;
 use std::slice;
 
 /// A trait to retrieve the constants necessary to check if a `JSObject`
