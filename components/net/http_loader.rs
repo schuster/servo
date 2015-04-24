@@ -19,7 +19,7 @@ use hyper::mime::{Mime, TopLevel, SubLevel};
 use hyper::net::HttpConnector;
 use hyper::status::{StatusCode, StatusClass};
 use std::error::Error;
-use openssl::ssl::{SslContext, SslVerifyMode};
+use openssl::ssl::{SslContext, SSL_VERIFY_PEER};
 use std::io::{self, Read, Write};
 use std::sync::Arc;
 use std::sync::mpsc::{Sender, channel};
@@ -56,7 +56,7 @@ enum ReadResult {
 fn read_block<R: Read>(reader: &mut R) -> Result<ReadResult, ()> {
     let mut buf = vec![0; 1024];
 
-    match reader.read(buf.as_mut_slice()) {
+    match reader.read(&mut buf) {
         Ok(len) if len > 0 => {
             unsafe { buf.set_len(len); }
             Ok(ReadResult::Payload(buf))
@@ -114,20 +114,20 @@ fn load(mut load_data: LoadData, start_chan: LoadConsumer, classifier: Arc<MIMEC
         info!("requesting {}", url.serialize());
 
         fn verifier(ssl: &mut SslContext) {
-            ssl.set_verify(SslVerifyMode::SslVerifyPeer, None);
+            ssl.set_verify(SSL_VERIFY_PEER, None);
             let mut certs = resources_dir_path();
             certs.push("certs");
-            ssl.set_CA_file(&certs);
+            ssl.set_CA_file(&certs).unwrap();
         };
 
-        let ssl_err_string = "[UnknownError { library: \"SSL routines\", \
+        let ssl_err_string = "Some(OpenSslErrors([UnknownError { library: \"SSL routines\", \
 function: \"SSL3_GET_SERVER_CERTIFICATE\", \
-reason: \"certificate verify failed\" }]";
+reason: \"certificate verify failed\" }]))";
 
         let mut connector = if opts::get().nossl {
             HttpConnector(None)
         } else {
-            HttpConnector(Some(box verifier as Box<FnMut(&mut SslContext)>))
+            HttpConnector(Some(box verifier as Box<FnMut(&mut SslContext) + Send>))
         };
 
         let mut req = match Request::with_connector(load_data.method.clone(), url.clone(), &mut connector) {
@@ -135,7 +135,8 @@ reason: \"certificate verify failed\" }]";
             Err(HttpError::HttpIoError(ref io_error)) if (
                 io_error.kind() == io::ErrorKind::Other &&
                 io_error.description() == "Error in OpenSSL" &&
-                io_error.detail() == Some(ssl_err_string.to_owned())
+                // FIXME: This incredibly hacky. Make it more robust, and at least test it.
+                format!("{:?}", io_error.cause()) == ssl_err_string
             ) => {
                 let mut image = resources_dir_path();
                 image.push("badcert.html");

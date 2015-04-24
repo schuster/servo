@@ -67,7 +67,7 @@ impl Cookie {
 
         // Step 7
         let mut path = cookie.path.unwrap_or("".to_owned());
-        if path.is_empty() || path.char_at(0) != '/' {
+        if path.is_empty() || path.as_bytes()[0] != b'/' {
             let url_path = request.serialize_path();
             let url_path = url_path.as_ref().map(|path| &**path);
             path = Cookie::default_path(url_path.unwrap_or("")).to_owned();
@@ -116,7 +116,7 @@ impl Cookie {
     pub fn path_match(request_path: &str, cookie_path: &str) -> bool {
         request_path == cookie_path ||
         ( request_path.starts_with(cookie_path) &&
-            ( request_path.ends_with("/") || request_path.char_at(cookie_path.len() - 1) == '/' )
+            ( request_path.ends_with("/") || request_path.as_bytes()[cookie_path.len() - 1] == b'/' )
         )
     }
 
@@ -126,7 +126,7 @@ impl Cookie {
             return true;
         }
         if string.ends_with(domain_string)
-            && string.char_at(string.len()-domain_string.len()-1) == '.'
+            && string.as_bytes()[string.len()-domain_string.len()-1] == b'.'
             && Ipv4Addr::from_str(string).is_err()
             && Ipv6Addr::from_str(string).is_err() {
             return true;
