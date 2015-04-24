@@ -26,7 +26,7 @@ pub struct BufferMap {
 }
 
 /// A key with which to store buffers. It is based on the size of the buffer.
-#[derive(Eq, Copy)]
+#[derive(Eq, Copy, Clone)]
 struct BufferKey([usize; 2]);
 
 impl Hash for BufferKey {
@@ -109,7 +109,7 @@ impl BufferMap {
                 }
             };
             if {
-                let list = &mut self.map[old_key].buffers;
+                let list = &mut self.map.get_mut(&old_key).unwrap().buffers;
                 let condemned_buffer = list.pop().take().unwrap();
                 self.mem -= condemned_buffer.get_mem();
                 condemned_buffer.destroy(graphics_context);

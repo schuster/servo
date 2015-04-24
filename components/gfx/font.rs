@@ -9,7 +9,7 @@ use std::slice;
 use std::rc::Rc;
 use std::cell::RefCell;
 use util::cache::HashCache;
-use util::smallvec::{SmallVec, SmallVec8};
+use util::smallvec::SmallVec8;
 use style::computed_values::{font_stretch, font_variant, font_weight};
 use style::properties::style_structs::Font as FontStyle;
 use std::sync::Arc;
@@ -222,7 +222,8 @@ impl FontGroup {
         assert!(self.fonts.len() > 0);
 
         // TODO(Issue #177): Actually fall back through the FontGroup when a font is unsuitable.
-        TextRun::new(&mut *self.fonts.get(0).borrow_mut(), text.clone(), options)
+        let mut font_borrow = self.fonts[0].borrow_mut();
+        TextRun::new(&mut *font_borrow, text.clone(), options)
     }
 }
 

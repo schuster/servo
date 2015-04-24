@@ -229,14 +229,31 @@ macro_rules! int_range_index {
                 let (x, b) = self.get().overflowing_mul(rhs.get());
                 ($Self_(x), b)
             }
+
+            fn overflowing_div(self, rhs: $Self_) -> ($Self_, bool) {
+                let (x, b) = self.get().overflowing_div(rhs.get());
+                ($Self_(x), b)
+            }
+            fn overflowing_rem(self, rhs: $Self_) -> ($Self_, bool) {
+                let (x, b) = self.get().overflowing_rem(rhs.get());
+                ($Self_(x), b)
+            }
+            fn overflowing_shl(self, rhs: u32) -> ($Self_, bool) {
+                let (x, b) = self.get().overflowing_shl(rhs);
+                ($Self_(x), b)
+            }
+            fn overflowing_shr(self, rhs: u32) -> ($Self_, bool) {
+                let (x, b) = self.get().overflowing_shr(rhs);
+                ($Self_(x), b)
+            }
         }
 
         impl ::std::iter::Step for $Self_ {
             fn step(&self, by: &Self) -> Option<Self> {
-                self.get().step(by.get()).map($Self_)
+                self.get().step(&by.get()).map($Self_)
             }
             fn steps_between(start: &Self, end: &Self, by: &Self) -> Option<usize> {
-                self.get().steps_between(end.get(), by.get())
+                ::std::iter::Step::steps_between(&start.get(), &end.get(), &by.get())
             }
         }
     )

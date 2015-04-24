@@ -277,12 +277,12 @@ impl Au {
     }
 
     #[inline]
-    pub fn from_pt(pt: f32) -> Au {
+    pub fn from_pt(pt: f64) -> Au {
         from_frac_px(pt_to_px(pt))
     }
 
     #[inline]
-    pub fn from_frac_px(px: f32) -> Au {
+    pub fn from_frac_px(px: f64) -> Au {
         Au((px * 60.) as i32)
     }
 
@@ -302,16 +302,16 @@ impl Au {
 }
 
 // assumes 72 points per inch, and 96 px per inch
-pub fn pt_to_px(pt: f32) -> f32 {
+pub fn pt_to_px(pt: f64) -> f64 {
     pt / 72. * 96.
 }
 
 // assumes 72 points per inch, and 96 px per inch
-pub fn px_to_pt(px: f32) -> f32 {
+pub fn px_to_pt(px: f64) -> f64 {
     px / 96. * 72.
 }
 
-pub fn from_frac_px(px: f32) -> Au {
+pub fn from_frac_px(px: f64) -> Au {
     Au((px * 60.) as i32)
 }
 

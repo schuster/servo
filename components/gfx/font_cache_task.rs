@@ -213,7 +213,7 @@ impl FontCache {
     fn find_font_in_web_family<'a>(&'a mut self, family_name: &LowercaseString, desc: &FontTemplateDescriptor)
                                 -> Option<Arc<FontTemplateData>> {
         if self.web_families.contains_key(family_name) {
-            let family = &mut self.web_families[*family_name];
+            let family = self.web_families.get_mut(family_name).unwrap();
             let maybe_font = family.find_font_for_style(desc, &self.font_context);
             maybe_font
         } else {

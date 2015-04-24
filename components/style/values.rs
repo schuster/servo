@@ -1083,7 +1083,7 @@ pub mod computed {
 
         fn mul(self, scalar: CSSFloat) -> LengthAndPercentage {
             LengthAndPercentage {
-                length: Au::from_frac_px(self.length.to_frac32_px() * scalar),
+                length: Au::from_frac32_px(self.length.to_frac32_px() * scalar),
                 percentage: self.percentage * scalar,
             }
         }

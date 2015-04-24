@@ -9,8 +9,6 @@
 #![crate_name = "devtools_traits"]
 #![crate_type = "rlib"]
 
-#![feature(net)]
-
 #![allow(non_snake_case)]
 
 extern crate msg;
