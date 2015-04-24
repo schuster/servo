@@ -5,7 +5,6 @@
 #![crate_name = "webdriver_server"]
 #![crate_type = "rlib"]
 
-#![feature(net)]
 #![feature(rustc_private)]
 
 #[macro_use]
@@ -37,12 +36,13 @@ use uuid::Uuid;
 use std::borrow::ToOwned;
 use rustc_serialize::json::{Json, ToJson};
 use std::collections::BTreeMap;
+use std::net::SocketAddr;
 
 pub fn start_server(port: u16, constellation_chan: ConstellationChan) {
     let handler = Handler::new(constellation_chan);
 
     spawn_named("WebdriverHttpServer".to_owned(), move || {
-        server::start("0.0.0.0", port, handler);
+        server::start(SocketAddr::new("0.0.0.0".parse().unwrap(), port), handler);
     });
 }
 
