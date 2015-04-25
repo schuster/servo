@@ -70,7 +70,6 @@ use net_traits::image_cache_task::{ImageCacheChan, ImageCacheTask, ImageCacheRes
 use net_traits::storage_task::StorageTask;
 use string_cache::Atom;
 use util::geometry::to_frac_px;
-use util::smallvec::SmallVec;
 use util::str::DOMString;
 use util::task::{spawn_named, spawn_named_with_send_on_failure};
 use util::task_state;

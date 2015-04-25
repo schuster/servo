@@ -56,7 +56,7 @@ use script_traits::UntrustedNodeAddress;
 use msg::compositor_msg::ScriptListener;
 use msg::constellation_msg::ConstellationChan;
 use net_traits::image::base::Image;
-use util::smallvec::{SmallVec1, SmallVec};
+use util::smallvec::SmallVec1;
 use util::str::{LengthOrPercentageOrAuto};
 use std::cell::{Cell, RefCell};
 use std::collections::{HashMap, HashSet};

@@ -16,7 +16,6 @@ use profile::mem::{Reporter, ReportsChan};
 use script_traits::{ScriptControlChan, OpaqueScriptLayoutChannel, UntrustedNodeAddress};
 use std::any::Any;
 use std::sync::mpsc::{channel, Receiver, Sender};
-use std::boxed::BoxAny;
 use style::animation::PropertyAnimation;
 use style::media_queries::MediaQueryList;
 use style::stylesheets::Stylesheet;

@@ -446,8 +446,8 @@ fn is_simple_method(m: &Method) -> bool {
 pub fn allow_cross_origin_request(req: &CORSRequest, headers: &Headers) -> bool {
     //FIXME(seanmonstar): use req.headers.get::<AccessControlAllowOrigin>()
     match headers.get() {
-        Some(&AccessControlAllowOrigin::AllowStar) => true, // Not always true, depends on credentials mode
-        Some(&AccessControlAllowOrigin::AllowOrigin(ref url)) =>
+        Some(&AccessControlAllowOrigin::Any) => true, // Not always true, depends on credentials mode
+        Some(&AccessControlAllowOrigin::Value(ref url)) =>
             url.scheme == req.origin.scheme &&
             url.host() == req.origin.host() &&
             url.port() == req.origin.port(),
