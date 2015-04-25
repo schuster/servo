@@ -150,7 +150,7 @@ impl InProgressLoad {
     }
 }
 
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub enum TimerSource {
     FromWindow(PipelineId),
     FromWorker

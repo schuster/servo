@@ -189,7 +189,7 @@ impl Drop for Node {
 /// suppress observers flag
 /// https://dom.spec.whatwg.org/#concept-node-insert
 /// https://dom.spec.whatwg.org/#concept-node-remove
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 enum SuppressObserver {
     Suppressed,
     Unsuppressed
@@ -265,7 +265,7 @@ impl LayoutDataRef {
 }
 
 /// The different types of nodes.
-#[derive(Copy, PartialEq, Debug)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 #[jstraceable]
 pub enum NodeTypeId {
     DocumentType,
@@ -1310,7 +1310,7 @@ impl Iterator for TreeIterator {
 
 
 /// Specifies whether children must be recursively cloned or not.
-#[derive(Copy, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum CloneChildrenFlag {
     CloneChildren,
     DoNotCloneChildren
