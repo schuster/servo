@@ -45,7 +45,7 @@ use html5ever::Attribute;
 use html5ever::serialize::{Serializable, Serializer, AttrRef};
 use html5ever::serialize::TraversalScope;
 use html5ever::serialize::TraversalScope::{IncludeNode, ChildrenOnly};
-use html5ever::tree_builder::{TreeSink, QuirksMode, NodeOrText, AppendNode, AppendText};
+use html5ever::tree_builder::{TreeSink, QuirksMode, NodeOrText, AppendNode, AppendText, NextParserState};
 use string_cache::QualName;
 
 use hyper::header::ContentType;
@@ -179,10 +179,11 @@ impl<'a> TreeSink for servohtmlparser::Sink {
         script.map(|script| script.mark_already_started());
     }
 
-    fn complete_script(&mut self, node: JS<Node>) {
+    fn complete_script(&mut self, node: JS<Node>) -> NextParserState {
         let node: Root<Node> = node.root();
         let script: Option<JSRef<HTMLScriptElement>> = HTMLScriptElementCast::to_ref(node.r());
         script.map(|script| script.prepare());
+        NextParserState::Continue  // FIXME: Do we want to suspend here?
     }
 
     fn reparent_children(&mut self, node: JS<Node>, new_parent: JS<Node>) {
