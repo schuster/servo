@@ -40,7 +40,7 @@ pub fn load(load_data: LoadData, start_chan: LoadConsumer) {
         },
         None => ()
     }
-    let parts: Vec<&str> = scheme_data.splitn(1, ',').collect();
+    let parts: Vec<&str> = scheme_data.splitn(2, ',').collect();
     if parts.len() != 2 {
         start_sending(start_chan, metadata).send(Done(Err("invalid data uri".to_string()))).unwrap();
         return;
