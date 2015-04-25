@@ -310,7 +310,7 @@ impl TextInput {
             },
             // printable characters have single-character key values
             c if c.len() == 1 => {
-                self.insert_char(c.char_at(0));
+                self.insert_char(c.chars().next().unwrap());
                 KeyReaction::DispatchInput
             }
             "Space" => {
