@@ -325,7 +325,7 @@ pub struct RootedCollectionSet {
 thread_local!(pub static ROOTED_COLLECTIONS: Rc<RefCell<RootedCollectionSet>> =
               Rc::new(RefCell::new(RootedCollectionSet::new())));
 
-enum CollectionType {
+pub enum CollectionType {
     DOMObjects,
     JSVals,
     JSObjects,
@@ -383,7 +383,7 @@ impl RootedCollectionSet {
 
 
 /// Trait implemented by all types that can be used with RootedVec
-trait VecRootableType {
+pub trait VecRootableType {
     /// Return the type tag used to determine how to trace RootedVec
     fn tag(_a: Option<Self>) -> CollectionType;
 }
