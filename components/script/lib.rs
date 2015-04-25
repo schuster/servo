@@ -49,6 +49,7 @@ extern crate selectors;
 extern crate util;
 #[macro_use]
 extern crate style;
+extern crate unicase;
 extern crate url;
 extern crate uuid;
 extern crate string_cache;

@@ -30,6 +30,7 @@ use hyper::header::{ContentType, Host};
 use hyper::method::Method;
 use hyper::status::StatusClass::Success;
 
+use unicase::UniCase;
 use url::{SchemeData, Url};
 use util::task::spawn_named;
 
@@ -185,10 +186,10 @@ impl CORSRequest {
         // Step 5 - 7
         let mut header_names = vec!();
         for header in self.headers.iter() {
-            header_names.push(header.name().to_ascii_lowercase());
+            header_names.push(header.name().to_owned());
         }
         header_names.sort();
-        preflight.headers.set(AccessControlRequestHeaders(header_names));
+        preflight.headers.set(AccessControlRequestHeaders(header_names.into_iter().map(UniCase).collect()));
 
         // Step 8 unnecessary, we don't use the request body
         // Step 9, 10 unnecessary, we're writing our own fetch code

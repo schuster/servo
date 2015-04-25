@@ -618,8 +618,12 @@ pub struct RootCollection {
 }
 
 /// A pointer to a RootCollection, for use in global variables.
-#[dervie(Copy, Clone)]
 pub struct RootCollectionPtr(pub *const RootCollection);
+
+impl Copy for RootCollectionPtr {}
+impl Clone for RootCollectionPtr {
+    fn clone(&self) -> RootCollectionPtr { *self }
+}
 
 impl RootCollection {
     /// Create an empty collection of roots

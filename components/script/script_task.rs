@@ -96,7 +96,7 @@ use std::result::Result;
 use std::sync::mpsc::{channel, Sender, Receiver, Select};
 use time::Tm;
 
-use hyper::header::ContentType;
+use hyper::header::{ContentType, HttpDate};
 use hyper::mime::{Mime, TopLevel, SubLevel};
 
 thread_local!(pub static STACK_ROOTS: Cell<Option<RootCollectionPtr>> = Cell::new(None));
@@ -1127,7 +1127,7 @@ impl ScriptTask {
                                  incomplete.window_size).root();
 
         let last_modified: Option<DOMString> = response.metadata.headers.as_ref().and_then(|headers| {
-            headers.get().map(|&LastModified(ref tm)| dom_last_modified(tm))
+            headers.get().map(|&LastModified(HttpDate(ref tm))| dom_last_modified(tm))
         });
 
         let content_type = match response.metadata.content_type {
