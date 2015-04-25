@@ -67,7 +67,7 @@ impl AttrValue {
 
     pub fn tokens<'a>(&'a self) -> Option<&'a [Atom]> {
         match *self {
-            AttrValue::TokenList(_, ref tokens) => Some(tokens.as_slice()),
+            AttrValue::TokenList(_, ref tokens) => Some(tokens),
             _ => None
         }
     }
@@ -319,7 +319,7 @@ impl AttrHelpersForLayout for Attr {
         // This transmute is used to cheat the lifetime restriction.
         let value = mem::transmute::<&AttrValue, &AttrValue>(self.value.borrow_for_layout());
         match *value {
-            AttrValue::TokenList(_, ref tokens) => Some(tokens.as_slice()),
+            AttrValue::TokenList(_, ref tokens) => Some(tokens),
             _ => None,
         }
     }

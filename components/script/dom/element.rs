@@ -74,7 +74,6 @@ use std::ascii::AsciiExt;
 use std::borrow::{Cow, ToOwned};
 use std::cell::{Ref, RefMut};
 use std::default::Default;
-use std::io::Write;
 use std::mem;
 use std::sync::Arc;
 use string_cache::{Atom, Namespace, QualName};
