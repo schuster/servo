@@ -325,9 +325,13 @@ pub struct RootedCollectionSet {
 thread_local!(pub static ROOTED_COLLECTIONS: Rc<RefCell<RootedCollectionSet>> =
               Rc::new(RefCell::new(RootedCollectionSet::new())));
 
+/// Type of `RootedVec`
 pub enum CollectionType {
+    /// DOM objects
     DOMObjects,
+    /// `JSVal`s
     JSVals,
+    /// `*mut JSObject`s
     JSObjects,
 }
 
