@@ -252,7 +252,7 @@ pub fn base64_btoa(input: DOMString) -> Fallible<DOMString> {
 
         // "and then must apply the base64 algorithm to that sequence of
         //  octets, and return the result. [RFC4648]"
-        Ok(octets.as_slice().to_base64(STANDARD))
+        Ok(octets.to_base64(STANDARD))
     }
 }
 
@@ -268,7 +268,7 @@ pub fn base64_atob(input: DOMString) -> Fallible<DOMString> {
     let without_spaces = input.chars()
         .filter(|&c| ! is_html_space(c))
         .collect::<String>();
-    let mut input = without_spaces.as_slice();
+    let mut input = &*without_spaces;
 
     // "If the length of input divides by 4 leaving no remainder, then:
     //  if input ends with one or two U+003D EQUALS SIGN (=) characters,
