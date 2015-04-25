@@ -121,7 +121,7 @@ impl<'a> BlobMethods for JSRef<'a, Blob> {
             None => "".to_owned(),
             Some(str) => {
                 if is_ascii_printable(&str) {
-                    str.as_slice().to_ascii_lowercase().to_owned()
+                    str.to_ascii_lowercase()
                 } else {
                     "".to_owned()
                 }
@@ -130,13 +130,13 @@ impl<'a> BlobMethods for JSRef<'a, Blob> {
         let span: i64 = max(relativeEnd - relativeStart, 0);
         let global = self.global.root();
         match self.bytes {
-            None => Blob::new(global.r(), None, relativeContentType.as_slice()),
+            None => Blob::new(global.r(), None, &relativeContentType),
             Some(ref vec) => {
                 let start = relativeStart.to_usize().unwrap();
                 let end = (relativeStart + span).to_usize().unwrap();
                 let mut bytes: Vec<u8> = Vec::new();
                 bytes.push_all(&vec[start..end]);
-                Blob::new(global.r(), Some(bytes), relativeContentType.as_slice())
+                Blob::new(global.r(), Some(bytes), &relativeContentType)
             }
         }
     }
