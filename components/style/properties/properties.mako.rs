@@ -2115,7 +2115,7 @@ pub fn modify_style_for_anonymous_table_object(
         new_display_value: longhands::display::computed_value::T) {
     let mut style = Arc::make_mut(style);
     let box_style = Arc::make_mut(&mut style.box_);
-    box_style.display = new_display_value;
+    box_style.display = longhands::display::computed_value::T::none;
     box_style.position = longhands::position::computed_value::T::static_;
 }
 
